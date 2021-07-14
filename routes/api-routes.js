@@ -26,5 +26,32 @@ module.exports = function (app) {
             });
     });
 
+    app.put("/api/workouts/:id", function (req, res) {
+        db.Workout.findByIdAndUpdate(req.params.id,
+            { $push: { exercises: req.body } },
+            { new: true }
+        )
+            .then((workout) => {
+                res.json(workout);
+            })
+            .catch((err) => {
+                console, log(err);
+                res.json({
+                    error: true,
+                    data: null,
+                    message: "Failed to update workout.",
+                });
+            });
+    });
 
-}
+    app.get("api/workouts/range", (req, res) => {
+        db.Workout.find({})
+            .limit(15)
+            .then((foundWorkout) => {
+                res.json(foundWorkout);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    });
+};
