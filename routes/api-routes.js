@@ -44,7 +44,7 @@ module.exports = function (app) {
             });
     });
 
-    app.get("api/workouts/range", (req, res) => {
+    app.get("/api/workouts/range", (req, res) => {
         db.Workout.find({})
             .limit(15)
             .then((foundWorkout) => {
